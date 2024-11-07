@@ -72,7 +72,7 @@ public class DB {
                 System.out.println("A new database has been created.");
             }
 
-            // == Créer les tables: ==
+            // Créer les tables.
             Statement stmt = DriverManager.getConnection(URL).createStatement();
 
             // Créer table:
@@ -83,7 +83,7 @@ public class DB {
 
             stmt.execute(sql);
 
-            // == Vider la table: ==
+            // Vider la table.
             sql = "DELETE FROM file;";
 
             stmt.execute(sql);
