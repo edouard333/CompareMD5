@@ -274,7 +274,7 @@ public class FenetreNew extends javax.swing.JFrame {
                 try {
                     String dossier_destination = TF_dossier_destination.getText();
 
-                    if (dossier_destination.equals("")) {
+                    if (dossier_destination.isEmpty()) {
                         throw new Exception("Il faut spécifier un dossier de destination.");
                     }
 

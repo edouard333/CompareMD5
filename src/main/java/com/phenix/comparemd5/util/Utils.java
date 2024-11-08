@@ -54,7 +54,7 @@ public class Utils {
         // the message digest
         while ((bytesCount = fis.read(byteArray)) != -1) {
             digest.update(byteArray, 0, bytesCount);
-        };
+        }
 
         // close the input stream
         fis.close();

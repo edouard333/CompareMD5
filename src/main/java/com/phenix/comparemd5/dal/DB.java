@@ -29,7 +29,7 @@ public class DB {
     public void addFile(String name, String md5) {
         String sql = "INSERT INTO file (name, md5) VALUES(?, ?);";
 
-        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, md5);
 
@@ -104,8 +104,7 @@ public class DB {
     public String getMD5File(String name) {
         String sql = "SELECT md5 FROM file WHERE name = \"" + name + "\"";
 
-        try (Connection conn = this.connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-
+        try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             // loop through the result set
             if (rs.next()) {
                 return rs.getString("md5");
