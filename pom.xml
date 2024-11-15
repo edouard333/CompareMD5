@@ -4,7 +4,7 @@
     <groupId>com.phenix</groupId>
     <artifactId>comparemd5</artifactId>
     <name>CompareMD5</name>
-    <version>0.6.1</version>
+    <version>0.6.2</version>
     <packaging>jar</packaging>
     <url>https://github.com/edouard333/CompareMD5</url>
     
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.phenix</groupId>
             <artifactId>swing</artifactId>
-            <version>0.5.9</version>
+            <version>0.6.0</version>
         </dependency>
 
         <dependency>
