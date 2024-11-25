@@ -4,6 +4,7 @@ import com.phenix.comparemd5.util.Utils;
 import com.phenix.swing.FileDrop;
 import java.awt.Color;
 import java.io.File;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,10 +13,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
-public class Fenetre extends javax.swing.JFrame {
+public final class Fenetre extends JFrame {
 
     /**
-     * Créé la fenêtre.
+     * Crée la fenêtre.
      */
     public Fenetre() {
         initComponents();
@@ -23,10 +24,13 @@ public class Fenetre extends javax.swing.JFrame {
         // On centre la fenêtre.
         super.setLocationRelativeTo(null);
 
+        //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiers_sources.">
         new FileDrop(this.SP_fichiers_sources, files -> {
             initTableau(this.T_fichiers_sources, files);
         });
+        //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiers_destination.">
         new FileDrop(this.SP_fichiers_destination, files -> {
             initTableau(this.T_fichier_destination, files);
 
@@ -53,6 +57,7 @@ public class Fenetre extends javax.swing.JFrame {
                 this.B_tout_est_ok.setBackground(Color.RED);
             }
         });
+        //</editor-fold>
     }
 
     /**
@@ -69,13 +74,15 @@ public class Fenetre extends javax.swing.JFrame {
                 return (String) this.T_fichiers_sources.getValueAt(i, 1);
             }
         }
+
         return "-1";
     }
 
     /**
+     * Initialise un tableau.
      *
-     * @param tableau
-     * @param files
+     * @param tableau Le tableau.
+     * @param files Liste de fichier.
      */
     private void initTableau(JTable tableau, File[] files) {
         String[] columns = {"Fichier", "Hash", "OK"};
@@ -93,6 +100,7 @@ public class Fenetre extends javax.swing.JFrame {
                 return false;
             }
         };
+
         model.setColumnIdentifiers(columns);
         tableau.setModel(model);
 
@@ -107,15 +115,13 @@ public class Fenetre extends javax.swing.JFrame {
     /**
      * Analyse d'un ensemble de fichier.
      *
-     * @param files
-     * @param row
-     * @param model
-     * @param p
+     * @param files LIste de fichier.
+     * @param row La ligne.
+     * @param model Le modèle du tableau.
      */
     private void listFichier(File[] files, Object[] row, DefaultTableModel model) {
         //System.out.println("add : " + liste_remarque.get(i).getId());
         for (int i = 0; i < files.length; i++) {
-
             if (files[i].isDirectory()) {
                 listFichier(files[i].listFiles(), row, model);
             } else {
@@ -128,10 +134,9 @@ public class Fenetre extends javax.swing.JFrame {
     /**
      * Ajoute un fichier à la liste.
      *
-     * @param file
-     * @param row
-     * @param model
-     * @param p
+     * @param file Le fichier.
+     * @param row La ligne.
+     * @param model Le modèle du tableau.
      */
     private void addFile(File file, Object[] row, DefaultTableModel model) {
         row[0] = file.getName();

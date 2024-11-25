@@ -5,6 +5,5 @@ package com.phenix.comparemd5.dto;
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
-public class FichierDTO {
-
+public final class FichierDTO {
 }

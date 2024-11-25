@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
-public class Utils {
+public final class Utils {
 
     /**
      * On ne peut pas instancier la classe.

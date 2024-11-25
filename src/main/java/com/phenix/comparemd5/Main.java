@@ -12,7 +12,7 @@ import javax.swing.UIManager;
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
-public class Main {
+public final class Main {
 
     /**
      * Où commence le programme.
@@ -20,8 +20,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        //<editor-fold defaultstate="collapsed" desc="Design de l'application selon l'OS.">
         UIManager.LookAndFeelInfo[] list = UIManager.getInstalledLookAndFeels();
 
         try {
@@ -37,7 +36,7 @@ public class Main {
         }
         //</editor-fold>
 
-        /* Créé et affiche la fenêtre principale. */
+        // Crée et affiche la fenêtre principale.
         EventQueue.invokeLater(() -> {
             new FenetreNew().setVisible(true);
         });

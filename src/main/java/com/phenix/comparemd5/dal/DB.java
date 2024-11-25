@@ -13,7 +13,7 @@ import java.sql.Statement;
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
-public class DB {
+public final class DB {
 
     /**
      * Où se trouve la base de données sur l'ordinateur.
@@ -26,13 +26,12 @@ public class DB {
      * @param name
      * @param md5
      */
-    public void addFile(String name, String md5) {
+    public static void addFile(String name, String md5) {
         String sql = "INSERT INTO file (name, md5) VALUES(?, ?);";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, md5);
-
             pstmt.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -49,19 +48,21 @@ public class DB {
     private static Connection connect() {
         // SQLite connection string
         Connection conn = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(URL);
         } catch (SQLException | ClassNotFoundException exception) {
             exception.printStackTrace();
         }
+
         return conn;
     }
 
     /**
      * Tente de créer la base de données.
      */
-    public void creer() {
+    public static void creer() {
         // Créer la DB:
         try {
 
@@ -92,7 +93,6 @@ public class DB {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
     }
 
     /**
@@ -101,7 +101,7 @@ public class DB {
      * @param name
      * @return
      */
-    public String getMD5File(String name) {
+    public static String getMD5File(String name) {
         String sql = "SELECT md5 FROM file WHERE name = \"" + name + "\"";
 
         try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
@@ -112,8 +112,8 @@ public class DB {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+
         // En cas d'erreur, retourne null.
         return null;
     }
-
 }

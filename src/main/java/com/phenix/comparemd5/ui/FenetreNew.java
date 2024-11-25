@@ -3,11 +3,14 @@ package com.phenix.comparemd5.ui;
 import com.phenix.comparemd5.util.Utils;
 import com.phenix.swing.FileDrop;
 import java.awt.Color;
+import java.awt.Taskbar;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
-public class FenetreNew extends javax.swing.JFrame {
+public final class FenetreNew extends JFrame {
 
     /**
      * Crée la fenêtre.
@@ -26,6 +29,23 @@ public class FenetreNew extends javax.swing.JFrame {
 
         // On centre la fenêtre.
         super.setLocationRelativeTo(null);
+
+        try {
+            setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreNew.class.getClassLoader().getResource("images/download.png")));
+            final Taskbar taskbar = Taskbar.getTaskbar();
+
+            try {
+                //set icon for mac os (and other systems which do support this method)
+                taskbar.setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreNew.class.getClassLoader().getResource("images/download.png")));
+            } catch (final UnsupportedOperationException e) {
+                System.out.println("The os does not support: 'taskbar.setIconImage'");
+            } catch (final SecurityException e) {
+                System.out.println("There was a security exception for: 'taskbar.setIconImage'");
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
         // Initialise le tableau source :
         {
