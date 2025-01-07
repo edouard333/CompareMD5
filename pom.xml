@@ -4,7 +4,7 @@
     <groupId>com.phenix</groupId>
     <artifactId>comparemd5</artifactId>
     <name>CompareMD5</name>
-    <version>0.6.2</version>
+    <version>0.6.3</version>
     <packaging>jar</packaging>
     <url>https://github.com/edouard333/CompareMD5</url>
     
@@ -62,13 +62,13 @@
         <dependency>
             <groupId>com.phenix</groupId>
             <artifactId>swing</artifactId>
-            <version>0.6.0</version>
+            <version>0.6.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.47.0.0</version>
+            <version>3.47.1.0</version>
         </dependency>
     </dependencies>
     
