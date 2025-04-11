@@ -19,7 +19,7 @@ public final class Main {
      *
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc="Design de l'application selon l'OS.">
         UIManager.LookAndFeelInfo[] list = UIManager.getInstalledLookAndFeels();
 

@@ -1,5 +1,7 @@
 package com.phenix.comparemd5.dal;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -16,9 +18,31 @@ import java.sql.Statement;
 public final class DB {
 
     /**
+     * La seule instance.
+     */
+    private static DB instance;
+
+    /**
      * Où se trouve la base de données sur l'ordinateur.
      */
-    private static final String URL = "jdbc:sqlite:c:\\TMP\\file_md5.db";
+    @NotNull
+    @NotBlank
+    private final String url;
+
+    /**
+     *
+     */
+    private DB() {
+        this.url = "jdbc:sqlite:c:\\TMP\\file_md5.db";
+    }
+
+    /**
+     *
+     * @param url
+     */
+    private DB(String url) {
+        this.url = url;
+    }
 
     /**
      * Ajouter un fichier.
@@ -26,7 +50,7 @@ public final class DB {
      * @param name
      * @param md5
      */
-    public static void addFile(String name, String md5) {
+    public void addFile(String name, String md5) {
         String sql = "INSERT INTO file (name, md5) VALUES(?, ?);";
 
         try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -45,13 +69,13 @@ public final class DB {
      *
      * @return
      */
-    private static Connection connect() {
+    private Connection connect() {
         // SQLite connection string
         Connection conn = null;
 
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(URL);
+            conn = DriverManager.getConnection(this.url);
         } catch (SQLException | ClassNotFoundException exception) {
             exception.printStackTrace();
         }
@@ -62,11 +86,11 @@ public final class DB {
     /**
      * Tente de créer la base de données.
      */
-    public static void creer() {
+    public void creer() {
         // Créer la DB:
         try {
 
-            Connection conn = DriverManager.getConnection(URL);
+            Connection conn = DriverManager.getConnection(this.url);
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("The driver name is " + meta.getDriverName());
@@ -74,7 +98,7 @@ public final class DB {
             }
 
             // Créer les tables.
-            Statement stmt = DriverManager.getConnection(URL).createStatement();
+            Statement stmt = DriverManager.getConnection(this.url).createStatement();
 
             // Créer table:
             String sql = "CREATE TABLE IF NOT EXISTS file (\n"
@@ -96,12 +120,26 @@ public final class DB {
     }
 
     /**
+     * Retourne l'instance de {@link DB}.<br>
+     *
+     * @return L'instance.
+     */
+    @NotNull
+    public static synchronized DB getInstance() {
+        if (instance == null) {
+            instance = new DB();
+        }
+
+        return instance;
+    }
+
+    /**
      * Retourne le MD5 d'un fichier en <code>String</code>.
      *
      * @param name
      * @return
      */
-    public static String getMD5File(String name) {
+    public String getMD5File(String name) {
         String sql = "SELECT md5 FROM file WHERE name = \"" + name + "\"";
 
         try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {

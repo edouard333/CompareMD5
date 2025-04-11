@@ -89,27 +89,27 @@ public final class FenetreNew extends JFrame {
             this.T_fichiers_destinations.setModel(model);
         }
 
-        new FileDrop(this.SP_fichiers_sources, files -> {
+        new FileDrop(this.SP_fichiers_sources, liste_fichier -> {
             try {
                 DefaultTableModel model = (DefaultTableModel) this.T_fichiers_sources.getModel();
-                addListeFichier(model, files);
+                addListeFichier(model, liste_fichier);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         // Définit le dossier de destination :
-        new FileDrop(this.TF_dossier_destination, files -> {
+        new FileDrop(this.TF_dossier_destination, liste_fichier -> {
             try {
-                if (files.length != 1) {
+                if (liste_fichier.length != 1) {
                     throw new Exception("On ne peut déposer qu'un élement.");
                 }
 
-                if (!files[0].isDirectory()) {
+                if (!liste_fichier[0].isDirectory()) {
                     throw new Exception("Ca doit être un dossier.");
                 }
 
-                this.TF_dossier_destination.setText(files[0].getAbsolutePath());
+                this.TF_dossier_destination.setText(liste_fichier[0].getAbsolutePath());
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
@@ -294,7 +294,7 @@ public final class FenetreNew extends JFrame {
                 try {
                     String dossier_destination = TF_dossier_destination.getText();
 
-                    if (dossier_destination.isEmpty()) {
+                    if (dossier_destination.isBlank()) {
                         throw new Exception("Il faut spécifier un dossier de destination.");
                     }
 

@@ -1,4 +1,11 @@
-target/
+# Ignore le dossier d'IntelliJ.
+.idea/*
+
+# Hidden file Mac OS
+.DS_Store
+
+# Folder compile
+target/*
 
 # Compiled class file
 *.class

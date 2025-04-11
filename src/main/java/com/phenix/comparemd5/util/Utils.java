@@ -1,5 +1,6 @@
 package com.phenix.comparemd5.util;
 
+import jakarta.validation.constraints.NotNull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,7 +16,8 @@ public final class Utils {
     /**
      * On ne peut pas instancier la classe.
      */
-    private Utils() {
+    private Utils() throws Exception {
+        throw new Exception("Cette classe ne peut pas être instanciée.");
     }
 
     /**
@@ -23,10 +25,11 @@ public final class Utils {
      *
      * @param file
      * @return
+     *
      * @throws NoSuchAlgorithmException
      * @throws IOException
      */
-    public static String MD5(File file) throws NoSuchAlgorithmException, IOException {
+    public static String MD5(@NotNull File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest mdigest = MessageDigest.getInstance("MD5");
 
         return checksum(mdigest, file);
@@ -38,9 +41,10 @@ public final class Utils {
      * @param digest
      * @param file
      * @return
+     *
      * @throws IOException
      */
-    public static String checksum(MessageDigest digest, File file)
+    public static String checksum(@NotNull MessageDigest digest, @NotNull File file)
             throws IOException {
         // Get file input stream for reading the file
         // content

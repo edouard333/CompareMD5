@@ -25,14 +25,14 @@ public final class Fenetre extends JFrame {
         super.setLocationRelativeTo(null);
 
         //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiers_sources.">
-        new FileDrop(this.SP_fichiers_sources, files -> {
-            initTableau(this.T_fichiers_sources, files);
+        new FileDrop(this.SP_fichiers_sources, liste_fichier -> {
+            initTableau(this.T_fichiers_sources, liste_fichier);
         });
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiers_destination.">
-        new FileDrop(this.SP_fichiers_destination, files -> {
-            initTableau(this.T_fichier_destination, files);
+        new FileDrop(this.SP_fichiers_destination, liste_fichier -> {
+            initTableau(this.T_fichier_destination, liste_fichier);
 
             boolean tout_est_ok = true;
 
