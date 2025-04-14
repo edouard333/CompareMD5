@@ -34,7 +34,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="B_copîe" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="SP_fichiers_sources" pref="443" max="32767" attributes="0"/>
+                          <Component id="SP_fichiers_sources" pref="444" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -45,23 +45,21 @@
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="SP_fichiers_destination" min="-2" pref="459" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="L_destination" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="TF_dossier_destination" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="PB_progression" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="B_tout_est_ok" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="L_destination" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="TF_dossier_destination" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="B_rechercher_dossier_destination" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="PB_progression" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="B_tout_est_ok" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="SP_fichiers_destination" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,6 +76,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="L_destination" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TF_dossier_destination" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="B_rechercher_dossier_destination" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -105,6 +104,9 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="L_source">
       <Properties>
+        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="T_liste_fichier_source"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Source"/>
       </Properties>
     </Component>
@@ -115,7 +117,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="T_fichiers_sources">
+        <Component class="javax.swing.JTable" name="T_liste_fichier_source">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="4"/>
@@ -136,7 +138,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="T_fichiers_destinations">
+        <Component class="javax.swing.JTable" name="T_liste_fichier_destination">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="4"/>
@@ -172,6 +174,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_vider_listeActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="B_rechercher_dossier_destination">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="..."/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_rechercher_dossier_destinationActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

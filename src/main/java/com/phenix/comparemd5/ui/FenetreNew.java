@@ -2,6 +2,9 @@ package com.phenix.comparemd5.ui;
 
 import com.phenix.comparemd5.util.Utils;
 import com.phenix.swing.FileDrop;
+import com.phenix.swing.JChooser;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import java.awt.Color;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
@@ -15,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Fenêtre principale du programme.
+ * Fenêtre principale.
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
@@ -64,8 +67,9 @@ public final class FenetreNew extends JFrame {
                     return false;
                 }
             };
+
             model.setColumnIdentifiers(columns);
-            this.T_fichiers_sources.setModel(model);
+            this.T_liste_fichier_source.setModel(model);
         }
 
         // Initialise le tableau destination :
@@ -85,20 +89,23 @@ public final class FenetreNew extends JFrame {
                     return false;
                 }
             };
+
             model.setColumnIdentifiers(columns);
-            this.T_fichiers_destinations.setModel(model);
+            this.T_liste_fichier_destination.setModel(model);
         }
 
+        //<editor-fold defaultstate="collapsed" desc="Evènement quand on dépose des fichiers dans le tableau des fichiers sources.">
         new FileDrop(this.SP_fichiers_sources, liste_fichier -> {
             try {
-                DefaultTableModel model = (DefaultTableModel) this.T_fichiers_sources.getModel();
+                DefaultTableModel model = (DefaultTableModel) this.T_liste_fichier_source.getModel();
                 addListeFichier(model, liste_fichier);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
+        //</editor-fold>
 
-        // Définit le dossier de destination :
+        //<editor-fold defaultstate="collapsed" desc="Evènement quand on dépose un dossier dans le champ 'TF_dossier_destination'.">
         new FileDrop(this.TF_dossier_destination, liste_fichier -> {
             try {
                 if (liste_fichier.length != 1) {
@@ -114,6 +121,7 @@ public final class FenetreNew extends JFrame {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
+        //</editor-fold>
     }
 
     /**
@@ -122,7 +130,7 @@ public final class FenetreNew extends JFrame {
      * @param model Le modèle du tableau.
      * @param liste_fichier La liste des fichiers.
      */
-    private void addListeFichier(DefaultTableModel model, File[] liste_fichier) {
+    private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] liste_fichier) {
         this.addListeFichier(model, liste_fichier, null);
     }
 
@@ -133,11 +141,13 @@ public final class FenetreNew extends JFrame {
      * @param liste_fichier La liste des fichiers.
      * @param row Variable en mémoire pour ajouter un fichier au tableau.
      */
-    private void addListeFichier(DefaultTableModel model, File[] liste_fichier, String[] row) {
+    private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] liste_fichier, @Null String[] row) {
         for (int i = 0; i < liste_fichier.length; i++) {
+            // Si c'est un dossier, on ajoute tous ses fichiers.
             if (liste_fichier[i].isDirectory()) {
                 this.addListeFichier(model, liste_fichier[i].listFiles());
-            } else {
+            } // Sinon, on ajoute le fichier.
+            else {
                 row = new String[1];
                 row[0] = liste_fichier[i].getAbsolutePath();
                 System.out.println((i + 1) + "/" + liste_fichier.length);
@@ -157,22 +167,24 @@ public final class FenetreNew extends JFrame {
 
         L_source = new javax.swing.JLabel();
         SP_fichiers_sources = new javax.swing.JScrollPane();
-        T_fichiers_sources = new javax.swing.JTable();
+        T_liste_fichier_source = new javax.swing.JTable();
         L_destination = new javax.swing.JLabel();
         SP_fichiers_destination = new javax.swing.JScrollPane();
-        T_fichiers_destinations = new javax.swing.JTable();
+        T_liste_fichier_destination = new javax.swing.JTable();
         B_tout_est_ok = new javax.swing.JButton();
         B_copîe = new javax.swing.JButton();
         PB_progression = new javax.swing.JProgressBar();
         TF_dossier_destination = new javax.swing.JTextField();
         B_vider_liste = new javax.swing.JButton();
+        B_rechercher_dossier_destination = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MD5 de fichier 1.0.0");
 
+        L_source.setLabelFor(T_liste_fichier_source);
         L_source.setText("Source");
 
-        T_fichiers_sources.setModel(new javax.swing.table.DefaultTableModel(
+        T_liste_fichier_source.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -183,11 +195,11 @@ public final class FenetreNew extends JFrame {
 
             }
         ));
-        SP_fichiers_sources.setViewportView(T_fichiers_sources);
+        SP_fichiers_sources.setViewportView(T_liste_fichier_source);
 
         L_destination.setText("Destination");
 
-        T_fichiers_destinations.setModel(new javax.swing.table.DefaultTableModel(
+        T_liste_fichier_destination.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -198,7 +210,7 @@ public final class FenetreNew extends JFrame {
 
             }
         ));
-        SP_fichiers_destination.setViewportView(T_fichiers_destinations);
+        SP_fichiers_destination.setViewportView(T_liste_fichier_destination);
 
         B_tout_est_ok.setText("Tout est ok");
         B_tout_est_ok.setEnabled(false);
@@ -219,6 +231,13 @@ public final class FenetreNew extends JFrame {
             }
         });
 
+        B_rechercher_dossier_destination.setText("...");
+        B_rechercher_dossier_destination.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_rechercher_dossier_destinationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,25 +251,25 @@ public final class FenetreNew extends JFrame {
                                 .addComponent(B_vider_liste)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(B_copîe))
-                            .addComponent(SP_fichiers_sources, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
+                            .addComponent(SP_fichiers_sources, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(L_source)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SP_fichiers_destination, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(L_destination)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TF_dossier_destination))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PB_progression, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(B_tout_est_ok)))
-                        .addContainerGap())))
+                        .addComponent(L_destination)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TF_dossier_destination)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(B_rechercher_dossier_destination))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(PB_progression, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(B_tout_est_ok))
+                    .addComponent(SP_fichiers_destination))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,7 +282,8 @@ public final class FenetreNew extends JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(L_destination)
-                            .addComponent(TF_dossier_destination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(TF_dossier_destination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(B_rechercher_dossier_destination))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(SP_fichiers_destination, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
@@ -317,13 +337,13 @@ public final class FenetreNew extends JFrame {
 
                     String[] colonne_destination;
 
-                    DefaultTableModel model_destination = (DefaultTableModel) T_fichiers_destinations.getModel();
+                    DefaultTableModel model_destination = (DefaultTableModel) T_liste_fichier_destination.getModel();
 
-                    PB_progression.setMaximum(T_fichiers_sources.getRowCount());
+                    PB_progression.setMaximum(T_liste_fichier_source.getRowCount());
 
                     // Fait la copie des fichiers + vérifie via MD5 que la copie est conforme :
-                    for (int i = 0; i < T_fichiers_sources.getRowCount(); i++) {
-                        fichier_source = new File((String) T_fichiers_sources.getValueAt(i, 0));
+                    for (int i = 0; i < T_liste_fichier_source.getRowCount(); i++) {
+                        fichier_source = new File((String) T_liste_fichier_source.getValueAt(i, 0));
                         colonne_destination = new String[3];
 
                         try {
@@ -377,20 +397,32 @@ public final class FenetreNew extends JFrame {
      * @param evt L'évènement.
      */
     private void B_vider_listeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_vider_listeActionPerformed
-        DefaultTableModel model_source = (DefaultTableModel) this.T_fichiers_sources.getModel();
-        DefaultTableModel model_destination = (DefaultTableModel) this.T_fichiers_destinations.getModel();
+        DefaultTableModel model_source = (DefaultTableModel) this.T_liste_fichier_source.getModel();
+        DefaultTableModel model_destination = (DefaultTableModel) this.T_liste_fichier_destination.getModel();
 
-        while (model_source.getRowCount() > 0) {
-            model_source.removeRow(0);
-        }
-
-        while (model_destination.getRowCount() > 0) {
-            model_destination.removeRow(0);
-        }
+        model_source.setRowCount(0);
+        model_destination.setRowCount(0);
     }//GEN-LAST:event_B_vider_listeActionPerformed
+
+    /**
+     * Quand on clique sur le bouton "<em>...</em>".<br>
+     * On ouvre l'explorateur de fichier pour choisir le dossier où on veut
+     * sauver les fichiers.
+     *
+     * @param evt L'évènement.
+     */
+    private void B_rechercher_dossier_destinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_rechercher_dossier_destinationActionPerformed
+        JChooser.directory(
+                this,
+                (file) -> {
+                    this.TF_dossier_destination.setText(file.getAbsolutePath());
+                }
+        );
+    }//GEN-LAST:event_B_rechercher_dossier_destinationActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_copîe;
+    private javax.swing.JButton B_rechercher_dossier_destination;
     private javax.swing.JButton B_tout_est_ok;
     private javax.swing.JButton B_vider_liste;
     private javax.swing.JLabel L_destination;
@@ -399,7 +431,7 @@ public final class FenetreNew extends JFrame {
     private javax.swing.JScrollPane SP_fichiers_destination;
     private javax.swing.JScrollPane SP_fichiers_sources;
     private javax.swing.JTextField TF_dossier_destination;
-    private javax.swing.JTable T_fichiers_destinations;
-    private javax.swing.JTable T_fichiers_sources;
+    private javax.swing.JTable T_liste_fichier_destination;
+    private javax.swing.JTable T_liste_fichier_source;
     // End of variables declaration//GEN-END:variables
 }
