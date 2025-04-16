@@ -17,7 +17,7 @@ public final class Main {
     /**
      * Où commence le programme.
      *
-     * @param args the command line arguments
+     * @param args Les valeurs reçues par le programme.
      */
     public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc="Design de l'application selon l'OS.">
@@ -36,7 +36,7 @@ public final class Main {
         }
         //</editor-fold>
 
-        // Crée et affiche la fenêtre principale.
+        // Crée et affiche la fenêtre.
         EventQueue.invokeLater(() -> {
             new FenetreNew().setVisible(true);
         });

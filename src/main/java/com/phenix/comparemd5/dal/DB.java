@@ -120,7 +120,7 @@ public final class DB {
     }
 
     /**
-     * Retourne l'instance de {@link DB}.<br>
+     * Retourne l'instance de {@link DB}.
      *
      * @return L'instance.
      */
