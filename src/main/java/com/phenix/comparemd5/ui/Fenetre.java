@@ -2,8 +2,12 @@ package com.phenix.comparemd5.ui;
 
 import com.phenix.comparemd5.util.Utils;
 import com.phenix.swing.FileDrop;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -84,7 +88,7 @@ public final class Fenetre extends JFrame {
      * @param tableau Le tableau.
      * @param files Liste de fichier.
      */
-    private void initTableau(JTable tableau, File[] files) {
+    private void initTableau(@NotNull JTable tableau, @NotNull File[] files) {
         String[] columns = {"Fichier", "Hash", "OK"};
 
         DefaultTableModel model = new DefaultTableModel() {
@@ -119,7 +123,7 @@ public final class Fenetre extends JFrame {
      * @param row La ligne.
      * @param model Le modèle du tableau.
      */
-    private void listFichier(File[] files, Object[] row, DefaultTableModel model) {
+    private void listFichier(@NotNull File[] files, @NotNull @NotEmpty Object[] row, @NotNull DefaultTableModel model) {
         //System.out.println("add : " + liste_remarque.get(i).getId());
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
@@ -138,13 +142,15 @@ public final class Fenetre extends JFrame {
      * @param row La ligne.
      * @param model Le modèle du tableau.
      */
-    private void addFile(File file, Object[] row, DefaultTableModel model) {
+    private void addFile(@NotNull File file, @NotNull @NotEmpty Object[] row, @NotNull DefaultTableModel model) {
         row[0] = file.getName();
 
         try {
             row[1] = Utils.MD5(file);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | NoSuchAlgorithmException exception) {
+            // Ajoute à la cellule l'erreur.
+            row[1] = exception.getMessage();
+            exception.printStackTrace();
         }
 
         row[2] = "";

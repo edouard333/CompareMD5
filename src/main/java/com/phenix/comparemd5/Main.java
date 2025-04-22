@@ -6,6 +6,7 @@ package com.phenix.comparemd5;
 import com.phenix.comparemd5.ui.FenetreNew;
 import java.awt.EventQueue;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Lance le programme.
@@ -31,7 +32,7 @@ public final class Main {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException exception) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException exception) {
             System.out.println("Erreur : " + exception.getMessage());
         }
         //</editor-fold>

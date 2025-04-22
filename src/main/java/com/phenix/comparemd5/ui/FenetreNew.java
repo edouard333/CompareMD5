@@ -1,5 +1,6 @@
 package com.phenix.comparemd5.ui;
 
+import com.phenix.comparemd5.exception.CompareMD5Exception;
 import com.phenix.comparemd5.util.Utils;
 import com.phenix.swing.FileDrop;
 import com.phenix.swing.JChooser;
@@ -40,9 +41,9 @@ public final class FenetreNew extends JFrame {
             try {
                 //set icon for mac os (and other systems which do support this method)
                 taskbar.setIconImage(Toolkit.getDefaultToolkit().getImage(FenetreNew.class.getClassLoader().getResource("images/download.png")));
-            } catch (final UnsupportedOperationException e) {
+            } catch (UnsupportedOperationException exception) {
                 System.out.println("The os does not support: 'taskbar.setIconImage'");
-            } catch (final SecurityException e) {
+            } catch (SecurityException exception) {
                 System.out.println("There was a security exception for: 'taskbar.setIconImage'");
             }
 
@@ -109,15 +110,15 @@ public final class FenetreNew extends JFrame {
         new FileDrop(this.TF_dossier_destination, liste_fichier -> {
             try {
                 if (liste_fichier.length != 1) {
-                    throw new Exception("On ne peut déposer qu'un élement.");
+                    throw new CompareMD5Exception("On ne peut déposer qu'un élement.");
                 }
 
                 if (!liste_fichier[0].isDirectory()) {
-                    throw new Exception("Ca doit être un dossier.");
+                    throw new CompareMD5Exception("Ca doit être un dossier.");
                 }
 
                 this.TF_dossier_destination.setText(liste_fichier[0].getAbsolutePath());
-            } catch (Exception exception) {
+            } catch (CompareMD5Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -315,17 +316,17 @@ public final class FenetreNew extends JFrame {
                     String dossier_destination = TF_dossier_destination.getText();
 
                     if (dossier_destination.isBlank()) {
-                        throw new Exception("Il faut spécifier un dossier de destination.");
+                        throw new CompareMD5Exception("Il faut spécifier un dossier de destination.");
                     }
 
                     File destination = new File(dossier_destination);
 
                     if (!destination.exists()) {
-                        throw new Exception("Le dossier de destination n'existe pas.");
+                        throw new CompareMD5Exception("Le dossier de destination n'existe pas.");
                     }
 
                     if (!destination.isDirectory()) {
-                        throw new Exception("La destination n'est pas un dossier.");
+                        throw new CompareMD5Exception("La destination n'est pas un dossier.");
                     }
 
                     boolean tout_est_ok = true;
@@ -366,12 +367,12 @@ public final class FenetreNew extends JFrame {
                                 colonne_destination[2] = "BAD";
                                 tout_est_ok = false;
                             }
-
                         } catch (IOException | NoSuchAlgorithmException exception) {
                             tout_est_ok = false;
                             colonne_destination[2] = "BAD";
                             System.out.println("Erreur : " + exception.getMessage());
                         }
+
                         model_destination.addRow(colonne_destination);
                         PB_progression.setValue(i + 1);
                     }
@@ -381,7 +382,7 @@ public final class FenetreNew extends JFrame {
                     } else {
                         B_tout_est_ok.setBackground(Color.RED);
                     }
-                } catch (Exception exception) {
+                } catch (CompareMD5Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }

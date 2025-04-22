@@ -1,9 +1,11 @@
 package com.phenix.comparemd5.dal;
 
+import com.phenix.comparemd5.exception.CompareMD5Exception;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import java.io.File;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Test de connexion à une DB SQLite.
+ * Connexion à une DB SQLite.<br>
+ * Design pattern : Singleton (optionnel).
  *
  * @author <a href="mailto:edouard128@hotmail.com">Edouard Jeanjean</a>
  */
@@ -27,21 +30,22 @@ public final class DB {
      */
     @NotNull
     @NotBlank
-    private final String url;
+    private final File fichier;
 
     /**
      *
      */
-    private DB() {
-        this.url = "jdbc:sqlite:c:\\TMP\\file_md5.db";
+    public DB() {
+        this(new File("c:\\TMP\\file_md5.db"));
     }
 
     /**
+     * Construit la base de données avec le fichier.
      *
-     * @param url
+     * @param fichier Le fichier.
      */
-    private DB(String url) {
-        this.url = url;
+    public DB(@NotNull @NotBlank File fichier) {
+        this.fichier = fichier;
     }
 
     /**
@@ -50,17 +54,15 @@ public final class DB {
      * @param name
      * @param md5
      */
-    public void addFile(String name, String md5) {
-        String sql = "INSERT INTO file (name, md5) VALUES(?, ?);";
+    public void addFile(@NotNull String name, @NotNull String md5) throws CompareMD5Exception {
+        String requete_sql = "INSERT INTO file (name, md5) VALUES(?, ?);";
 
-        try (Connection conn = connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(requete_sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, md5);
             pstmt.executeUpdate();
         } catch (SQLException exception) {
-            exception.printStackTrace();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+            throw new CompareMD5Exception(exception.getMessage(), exception);
         }
     }
 
@@ -68,54 +70,44 @@ public final class DB {
      * Donne l'objet de connexion.
      *
      * @return
+     *
+     * @throws CompareMD5Exception
      */
-    private Connection connect() {
-        // SQLite connection string
-        Connection conn = null;
-
+    @NotNull
+    private Connection connect() throws CompareMD5Exception {
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(this.url);
-        } catch (SQLException | ClassNotFoundException exception) {
-            exception.printStackTrace();
+            return DriverManager.getConnection("jdbc:sqlite:" + this.fichier.getAbsolutePath());
+        } catch (ClassNotFoundException | SQLException exception) {
+            throw new CompareMD5Exception(exception.getMessage(), exception);
         }
-
-        return conn;
     }
 
     /**
      * Tente de créer la base de données.
+     *
+     * @throws CompareMD5Exception
      */
-    public void creer() {
+    public void creer() throws CompareMD5Exception {
         // Créer la DB:
-        try {
-
-            Connection conn = DriverManager.getConnection(this.url);
-            if (conn != null) {
-                DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("A new database has been created.");
-            }
-
+        try (Connection conn = this.connect()) {
             // Créer les tables.
-            Statement stmt = DriverManager.getConnection(this.url).createStatement();
+            Statement stmt = this.connect().createStatement();
 
             // Créer table:
-            String sql = "CREATE TABLE IF NOT EXISTS file (\n"
+            String requete_sql = "CREATE TABLE IF NOT EXISTS file (\n"
                     + "	id INTEGER PRIMARY KEY,\n" // ID
                     + "	name TEXT NOT NULL,\n"
                     + " md5 TEXT NOT NULL);";
 
-            stmt.execute(sql);
+            stmt.execute(requete_sql);
 
             // Vider la table.
-            sql = "DELETE FROM file;";
+            requete_sql = "DELETE FROM file;";
 
-            stmt.execute(sql);
+            stmt.execute(requete_sql);
         } catch (SQLException exception) {
-            exception.printStackTrace();
-        } catch (Exception exception) {
-            exception.printStackTrace();
+            throw new CompareMD5Exception(exception.getMessage(), exception);
         }
     }
 
@@ -134,24 +126,29 @@ public final class DB {
     }
 
     /**
-     * Retourne le MD5 d'un fichier en <code>String</code>.
+     * Retourne le MD5 d'un fichier en {@link String}.
      *
      * @param name
-     * @return
+     * @return Le MD5 sinon {@code null}.
+     *
+     * @throws CompareMD5Exception
      */
-    public String getMD5File(String name) {
-        String sql = "SELECT md5 FROM file WHERE name = \"" + name + "\"";
+    @Null
+    public String getMD5File(@NotNull String name) throws CompareMD5Exception {
+        String requete_sql = "SELECT md5 FROM file WHERE name = ?";
 
-        try (Connection conn = connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            // loop through the result set
-            if (rs.next()) {
-                return rs.getString("md5");
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(requete_sql)) {
+            pstmt.setString(1, name);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("md5");
+                } else {
+                    return null;
+                }
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw new CompareMD5Exception(exception.getMessage(), exception);
         }
-
-        // En cas d'erreur, retourne null.
-        return null;
     }
 }

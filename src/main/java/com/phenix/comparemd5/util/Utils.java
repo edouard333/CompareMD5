@@ -14,7 +14,9 @@ import java.security.NoSuchAlgorithmException;
 public final class Utils {
 
     /**
-     * On ne peut pas instancier la classe.
+     * On ne peut pas instancier cette classe.
+     *
+     * @throws Exception On ne peut pas instancier cette classe.
      */
     private Utils() throws Exception {
         throw new Exception("Cette classe ne peut pas être instanciée.");
@@ -44,8 +46,7 @@ public final class Utils {
      *
      * @throws IOException
      */
-    public static String checksum(@NotNull MessageDigest digest, @NotNull File file)
-            throws IOException {
+    public static String checksum(@NotNull MessageDigest digest, @NotNull File file) throws IOException {
         // Get file input stream for reading the file
         // content
         FileInputStream fis = new FileInputStream(file);
