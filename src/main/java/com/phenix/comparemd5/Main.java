@@ -6,6 +6,7 @@ package com.phenix.comparemd5;
 import com.phenix.comparemd5.ui.FenetreNew;
 import java.awt.EventQueue;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
@@ -22,13 +23,13 @@ public final class Main {
      */
     public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc="Design de l'application selon l'OS.">
-        UIManager.LookAndFeelInfo[] list = UIManager.getInstalledLookAndFeels();
+        LookAndFeelInfo[] list = UIManager.getInstalledLookAndFeels();
 
         try {
-            for (int i = 0; i < list.length; i++) {
+            for (LookAndFeelInfo item : list) {
                 // Si on trouve un thème "Windows", on le prend !
-                if (list[i].getName().equals("Windows")) {
-                    UIManager.setLookAndFeel(list[i].getClassName());
+                if (item.getName().equals("Windows")) {
+                    UIManager.setLookAndFeel(item.getClassName());
                     break;
                 }
             }

@@ -70,9 +70,10 @@ public final class Fenetre extends JFrame {
      * @return
      */
     private String getMD5Source(String fichier) {
-        for (int i = 0; i < this.T_fichiers_sources.getRowCount(); i++) {
+        String fichier_source;
 
-            String fichier_source = (String) this.T_fichiers_sources.getValueAt(i, 0);
+        for (int i = 0; i < this.T_fichiers_sources.getRowCount(); i++) {
+            fichier_source = (String) this.T_fichiers_sources.getValueAt(i, 0);
 
             if (fichier_source.equals(fichier)) {
                 return (String) this.T_fichiers_sources.getValueAt(i, 1);
