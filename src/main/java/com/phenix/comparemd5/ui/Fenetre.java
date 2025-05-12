@@ -28,37 +28,37 @@ public final class Fenetre extends JFrame {
         // On centre la fenêtre.
         super.setLocationRelativeTo(null);
 
-        //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiers_sources.">
-        new FileDrop(this.SP_fichiers_sources, liste_fichier -> {
-            initTableau(this.T_fichiers_sources, liste_fichier);
+        //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiersSources.">
+        new FileDrop(this.SP_fichiersSources, listeFichier -> {
+            initTableau(this.T_fichiersSources, listeFichier);
         });
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiers_destination.">
-        new FileDrop(this.SP_fichiers_destination, liste_fichier -> {
-            initTableau(this.T_fichier_destination, liste_fichier);
+        //<editor-fold defaultstate="collapsed" desc="Evènement drag and drop pour SP_fichiersDestination.">
+        new FileDrop(this.SP_fichiersDestination, listeFichier -> {
+            initTableau(this.T_fichierDestination, listeFichier);
 
-            boolean tout_est_ok = true;
+            boolean toutEstOk = true;
 
             // Vérifie que les MD5 source et destination sont les mêmes...
-            for (int i = 0; i < this.T_fichier_destination.getRowCount(); i++) {
-                String nom_fichier = (String) this.T_fichier_destination.getValueAt(i, 0);
-                String fichier_source_md5 = getMD5Source(nom_fichier);
+            for (int i = 0; i < this.T_fichierDestination.getRowCount(); i++) {
+                String nomFichier = (String) this.T_fichierDestination.getValueAt(i, 0);
+                String fichierSourceMd5 = getMD5Source(nomFichier);
 
-                System.out.println(fichier_source_md5 + " == " + this.T_fichier_destination.getValueAt(i, 1));
+                System.out.println(fichierSourceMd5 + " == " + this.T_fichierDestination.getValueAt(i, 1));
 
-                if (fichier_source_md5.equals(this.T_fichier_destination.getValueAt(i, 1))) {
-                    this.T_fichier_destination.setValueAt("OK", i, 2);
+                if (fichierSourceMd5.equals(this.T_fichierDestination.getValueAt(i, 1))) {
+                    this.T_fichierDestination.setValueAt("OK", i, 2);
                 } else {
-                    this.T_fichier_destination.setValueAt("BAD", i, 2);
-                    tout_est_ok = false;
+                    this.T_fichierDestination.setValueAt("BAD", i, 2);
+                    toutEstOk = false;
                 }
             }
 
-            if (tout_est_ok) {
-                this.B_tout_est_ok.setBackground(Color.GREEN);
+            if (toutEstOk) {
+                this.B_toutEstOk.setBackground(Color.GREEN);
             } else {
-                this.B_tout_est_ok.setBackground(Color.RED);
+                this.B_toutEstOk.setBackground(Color.RED);
             }
         });
         //</editor-fold>
@@ -70,13 +70,13 @@ public final class Fenetre extends JFrame {
      * @return
      */
     private String getMD5Source(String fichier) {
-        String fichier_source;
+        String fichierSource;
 
-        for (int i = 0; i < this.T_fichiers_sources.getRowCount(); i++) {
-            fichier_source = (String) this.T_fichiers_sources.getValueAt(i, 0);
+        for (int i = 0; i < this.T_fichiersSources.getRowCount(); i++) {
+            fichierSource = (String) this.T_fichiersSources.getValueAt(i, 0);
 
-            if (fichier_source.equals(fichier)) {
-                return (String) this.T_fichiers_sources.getValueAt(i, 1);
+            if (fichierSource.equals(fichier)) {
+                return (String) this.T_fichiersSources.getValueAt(i, 1);
             }
         }
 
@@ -125,7 +125,7 @@ public final class Fenetre extends JFrame {
      * @param model Le modèle du tableau.
      */
     private void listFichier(@NotNull File[] files, @NotNull @NotEmpty Object[] row, @NotNull DefaultTableModel model) {
-        //System.out.println("add : " + liste_remarque.get(i).getId());
+        //System.out.println("add : " + listeRemarque.get(i).getId());
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
                 listFichier(files[i].listFiles(), row, model);
@@ -169,19 +169,19 @@ public final class Fenetre extends JFrame {
     private void initComponents() {
 
         L_source = new javax.swing.JLabel();
-        SP_fichiers_sources = new javax.swing.JScrollPane();
-        T_fichiers_sources = new javax.swing.JTable();
+        SP_fichiersSources = new javax.swing.JScrollPane();
+        T_fichiersSources = new javax.swing.JTable();
         L_destination = new javax.swing.JLabel();
-        SP_fichiers_destination = new javax.swing.JScrollPane();
-        T_fichier_destination = new javax.swing.JTable();
-        B_tout_est_ok = new javax.swing.JButton();
+        SP_fichiersDestination = new javax.swing.JScrollPane();
+        T_fichierDestination = new javax.swing.JTable();
+        B_toutEstOk = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MD5 de fichier 1.0.0");
 
         L_source.setText("Source");
 
-        T_fichiers_sources.setModel(new javax.swing.table.DefaultTableModel(
+        T_fichiersSources.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -192,11 +192,11 @@ public final class Fenetre extends JFrame {
 
             }
         ));
-        SP_fichiers_sources.setViewportView(T_fichiers_sources);
+        SP_fichiersSources.setViewportView(T_fichiersSources);
 
         L_destination.setText("Destination");
 
-        T_fichier_destination.setModel(new javax.swing.table.DefaultTableModel(
+        T_fichierDestination.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -207,9 +207,9 @@ public final class Fenetre extends JFrame {
 
             }
         ));
-        SP_fichiers_destination.setViewportView(T_fichier_destination);
+        SP_fichiersDestination.setViewportView(T_fichierDestination);
 
-        B_tout_est_ok.setText("Tout est ok");
+        B_toutEstOk.setText("Tout est ok");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,12 +223,12 @@ public final class Fenetre extends JFrame {
                 .addGap(206, 206, 206))
             .addGroup(layout.createSequentialGroup()
                 .addGap(199, 625, Short.MAX_VALUE)
-                .addComponent(B_tout_est_ok)
+                .addComponent(B_toutEstOk)
                 .addGap(195, 195, 195))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(SP_fichiers_sources, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                .addComponent(SP_fichiersSources, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SP_fichiers_destination, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(SP_fichiersDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,10 +239,10 @@ public final class Fenetre extends JFrame {
                     .addComponent(L_destination))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SP_fichiers_destination, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
-                    .addComponent(SP_fichiers_sources))
+                    .addComponent(SP_fichiersDestination, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                    .addComponent(SP_fichiersSources))
                 .addGap(30, 30, 30)
-                .addComponent(B_tout_est_ok)
+                .addComponent(B_toutEstOk)
                 .addGap(0, 19, Short.MAX_VALUE))
         );
 
@@ -250,12 +250,12 @@ public final class Fenetre extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton B_tout_est_ok;
+    private javax.swing.JButton B_toutEstOk;
     private javax.swing.JLabel L_destination;
     private javax.swing.JLabel L_source;
-    private javax.swing.JScrollPane SP_fichiers_destination;
-    private javax.swing.JScrollPane SP_fichiers_sources;
-    private javax.swing.JTable T_fichier_destination;
-    private javax.swing.JTable T_fichiers_sources;
+    private javax.swing.JScrollPane SP_fichiersDestination;
+    private javax.swing.JScrollPane SP_fichiersSources;
+    private javax.swing.JTable T_fichierDestination;
+    private javax.swing.JTable T_fichiersSources;
     // End of variables declaration//GEN-END:variables
 }

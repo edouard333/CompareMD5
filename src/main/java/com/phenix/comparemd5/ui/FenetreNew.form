@@ -30,11 +30,11 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="B_vider_liste" min="-2" max="-2" attributes="0"/>
+                              <Component id="B_viderListe" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="B_copîe" min="-2" max="-2" attributes="0"/>
+                              <Component id="B_copie" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="SP_fichiers_sources" pref="444" max="32767" attributes="0"/>
+                          <Component id="SP_fichiersSources" pref="444" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -48,16 +48,16 @@
                   <Group type="102" attributes="0">
                       <Component id="L_destination" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TF_dossier_destination" max="32767" attributes="0"/>
+                      <Component id="TF_dossierDestination" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="B_rechercher_dossier_destination" min="-2" max="-2" attributes="0"/>
+                      <Component id="B_rechercherDossierDestination" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="PB_progression" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="B_tout_est_ok" min="-2" max="-2" attributes="0"/>
+                      <Component id="B_toutEstOk" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="SP_fichiers_destination" max="32767" attributes="0"/>
+                  <Component id="SP_fichiersDestination" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -75,25 +75,25 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="L_destination" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="TF_dossier_destination" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="B_rechercher_dossier_destination" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TF_dossierDestination" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="B_rechercherDossierDestination" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="SP_fichiers_destination" pref="517" max="32767" attributes="0"/>
-                  <Component id="SP_fichiers_sources" max="32767" attributes="0"/>
+                  <Component id="SP_fichiersDestination" pref="517" max="32767" attributes="0"/>
+                  <Component id="SP_fichiersSources" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="B_copîe" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="B_vider_liste" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="B_copie" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="B_viderListe" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="PB_progression" max="32767" attributes="0"/>
-                      <Component id="B_tout_est_ok" max="32767" attributes="0"/>
+                      <Component id="B_toutEstOk" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="49" max="32767" attributes="0"/>
@@ -105,19 +105,19 @@
     <Component class="javax.swing.JLabel" name="L_source">
       <Properties>
         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="T_liste_fichier_source"/>
+          <ComponentRef name="T_listeFichierSource"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Source"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="SP_fichiers_sources">
+    <Container class="javax.swing.JScrollPane" name="SP_fichiersSources">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="T_liste_fichier_source">
+        <Component class="javax.swing.JTable" name="T_listeFichierSource">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="4"/>
@@ -131,14 +131,14 @@
         <Property name="text" type="java.lang.String" value="Destination"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="SP_fichiers_destination">
+    <Container class="javax.swing.JScrollPane" name="SP_fichiersDestination">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="T_liste_fichier_destination">
+        <Component class="javax.swing.JTable" name="T_listeFichierDestination">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="4"/>
@@ -147,18 +147,18 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="B_tout_est_ok">
+    <Component class="javax.swing.JButton" name="B_toutEstOk">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tout est ok"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="B_cop&#xee;e">
+    <Component class="javax.swing.JButton" name="B_copie">
       <Properties>
         <Property name="text" type="java.lang.String" value="Lancer copie"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_cop&#xee;eActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_copieActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JProgressBar" name="PB_progression">
@@ -166,22 +166,22 @@
         <Property name="toolTipText" type="java.lang.String" value="Avancement"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TF_dossier_destination">
+    <Component class="javax.swing.JTextField" name="TF_dossierDestination">
     </Component>
-    <Component class="javax.swing.JButton" name="B_vider_liste">
+    <Component class="javax.swing.JButton" name="B_viderListe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Vider liste"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_vider_listeActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_viderListeActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="B_rechercher_dossier_destination">
+    <Component class="javax.swing.JButton" name="B_rechercherDossierDestination">
       <Properties>
         <Property name="text" type="java.lang.String" value="..."/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_rechercher_dossier_destinationActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="B_rechercherDossierDestinationActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

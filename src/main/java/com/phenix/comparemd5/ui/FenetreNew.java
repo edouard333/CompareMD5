@@ -70,7 +70,7 @@ public final class FenetreNew extends JFrame {
             };
 
             model.setColumnIdentifiers(columns);
-            this.T_liste_fichier_source.setModel(model);
+            this.T_listeFichierSource.setModel(model);
         }
 
         // Initialise le tableau destination :
@@ -92,32 +92,32 @@ public final class FenetreNew extends JFrame {
             };
 
             model.setColumnIdentifiers(columns);
-            this.T_liste_fichier_destination.setModel(model);
+            this.T_listeFichierDestination.setModel(model);
         }
 
         //<editor-fold defaultstate="collapsed" desc="Evènement quand on dépose des fichiers dans le tableau des fichiers sources.">
-        new FileDrop(this.SP_fichiers_sources, liste_fichier -> {
+        new FileDrop(this.SP_fichiersSources, listeFichier -> {
             try {
-                DefaultTableModel model = (DefaultTableModel) this.T_liste_fichier_source.getModel();
-                addListeFichier(model, liste_fichier);
+                DefaultTableModel model = (DefaultTableModel) this.T_listeFichierSource.getModel();
+                addListeFichier(model, listeFichier);
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
         //</editor-fold>
 
-        //<editor-fold defaultstate="collapsed" desc="Evènement quand on dépose un dossier dans le champ 'TF_dossier_destination'.">
-        new FileDrop(this.TF_dossier_destination, liste_fichier -> {
+        //<editor-fold defaultstate="collapsed" desc="Evènement quand on dépose un dossier dans le champ 'TF_dossierDestination'.">
+        new FileDrop(this.TF_dossierDestination, listeFichier -> {
             try {
-                if (liste_fichier.length != 1) {
+                if (listeFichier.length != 1) {
                     throw new CompareMD5Exception("On ne peut déposer qu'un élement.");
                 }
 
-                if (!liste_fichier[0].isDirectory()) {
+                if (!listeFichier[0].isDirectory()) {
                     throw new CompareMD5Exception("Ca doit être un dossier.");
                 }
 
-                this.TF_dossier_destination.setText(liste_fichier[0].getAbsolutePath());
+                this.TF_dossierDestination.setText(listeFichier[0].getAbsolutePath());
             } catch (CompareMD5Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
@@ -129,29 +129,29 @@ public final class FenetreNew extends JFrame {
      * Ajout une liste de fichiers à un tableau.
      *
      * @param model Le modèle du tableau.
-     * @param liste_fichier La liste des fichiers.
+     * @param listeFichier La liste des fichiers.
      */
-    private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] liste_fichier) {
-        this.addListeFichier(model, liste_fichier, null);
+    private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] listeFichier) {
+        this.addListeFichier(model, listeFichier, null);
     }
 
     /**
      * Ajout une liste de fichiers à un tableau.
      *
      * @param model Le modèle du tableau.
-     * @param liste_fichier La liste des fichiers.
+     * @param listeFichier La liste des fichiers.
      * @param row Variable en mémoire pour ajouter un fichier au tableau.
      */
-    private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] liste_fichier, @Null String[] row) {
-        for (int i = 0; i < liste_fichier.length; i++) {
+    private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] listeFichier, @Null String[] row) {
+        for (int i = 0; i < listeFichier.length; i++) {
             // Si c'est un dossier, on ajoute tous ses fichiers.
-            if (liste_fichier[i].isDirectory()) {
-                this.addListeFichier(model, liste_fichier[i].listFiles());
+            if (listeFichier[i].isDirectory()) {
+                this.addListeFichier(model, listeFichier[i].listFiles());
             } // Sinon, on ajoute le fichier.
             else {
                 row = new String[1];
-                row[0] = liste_fichier[i].getAbsolutePath();
-                System.out.println((i + 1) + "/" + liste_fichier.length);
+                row[0] = listeFichier[i].getAbsolutePath();
+                System.out.println((i + 1) + "/" + listeFichier.length);
                 model.addRow(row);
             }
         }
@@ -167,25 +167,25 @@ public final class FenetreNew extends JFrame {
     private void initComponents() {
 
         L_source = new javax.swing.JLabel();
-        SP_fichiers_sources = new javax.swing.JScrollPane();
-        T_liste_fichier_source = new javax.swing.JTable();
+        SP_fichiersSources = new javax.swing.JScrollPane();
+        T_listeFichierSource = new javax.swing.JTable();
         L_destination = new javax.swing.JLabel();
-        SP_fichiers_destination = new javax.swing.JScrollPane();
-        T_liste_fichier_destination = new javax.swing.JTable();
-        B_tout_est_ok = new javax.swing.JButton();
-        B_copîe = new javax.swing.JButton();
+        SP_fichiersDestination = new javax.swing.JScrollPane();
+        T_listeFichierDestination = new javax.swing.JTable();
+        B_toutEstOk = new javax.swing.JButton();
+        B_copie = new javax.swing.JButton();
         PB_progression = new javax.swing.JProgressBar();
-        TF_dossier_destination = new javax.swing.JTextField();
-        B_vider_liste = new javax.swing.JButton();
-        B_rechercher_dossier_destination = new javax.swing.JButton();
+        TF_dossierDestination = new javax.swing.JTextField();
+        B_viderListe = new javax.swing.JButton();
+        B_rechercherDossierDestination = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MD5 de fichier 1.0.0");
 
-        L_source.setLabelFor(T_liste_fichier_source);
+        L_source.setLabelFor(T_listeFichierSource);
         L_source.setText("Source");
 
-        T_liste_fichier_source.setModel(new javax.swing.table.DefaultTableModel(
+        T_listeFichierSource.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -196,11 +196,11 @@ public final class FenetreNew extends JFrame {
 
             }
         ));
-        SP_fichiers_sources.setViewportView(T_liste_fichier_source);
+        SP_fichiersSources.setViewportView(T_listeFichierSource);
 
         L_destination.setText("Destination");
 
-        T_liste_fichier_destination.setModel(new javax.swing.table.DefaultTableModel(
+        T_listeFichierDestination.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -211,31 +211,31 @@ public final class FenetreNew extends JFrame {
 
             }
         ));
-        SP_fichiers_destination.setViewportView(T_liste_fichier_destination);
+        SP_fichiersDestination.setViewportView(T_listeFichierDestination);
 
-        B_tout_est_ok.setText("Tout est ok");
-        B_tout_est_ok.setEnabled(false);
+        B_toutEstOk.setText("Tout est ok");
+        B_toutEstOk.setEnabled(false);
 
-        B_copîe.setText("Lancer copie");
-        B_copîe.addActionListener(new java.awt.event.ActionListener() {
+        B_copie.setText("Lancer copie");
+        B_copie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                B_copîeActionPerformed(evt);
+                B_copieActionPerformed(evt);
             }
         });
 
         PB_progression.setToolTipText("Avancement");
 
-        B_vider_liste.setText("Vider liste");
-        B_vider_liste.addActionListener(new java.awt.event.ActionListener() {
+        B_viderListe.setText("Vider liste");
+        B_viderListe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                B_vider_listeActionPerformed(evt);
+                B_viderListeActionPerformed(evt);
             }
         });
 
-        B_rechercher_dossier_destination.setText("...");
-        B_rechercher_dossier_destination.addActionListener(new java.awt.event.ActionListener() {
+        B_rechercherDossierDestination.setText("...");
+        B_rechercherDossierDestination.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                B_rechercher_dossier_destinationActionPerformed(evt);
+                B_rechercherDossierDestinationActionPerformed(evt);
             }
         });
 
@@ -249,10 +249,10 @@ public final class FenetreNew extends JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(B_vider_liste)
+                                .addComponent(B_viderListe)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(B_copîe))
-                            .addComponent(SP_fichiers_sources, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+                                .addComponent(B_copie))
+                            .addComponent(SP_fichiersSources, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(179, 179, 179)
@@ -262,14 +262,14 @@ public final class FenetreNew extends JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(L_destination)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TF_dossier_destination)
+                        .addComponent(TF_dossierDestination)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(B_rechercher_dossier_destination))
+                        .addComponent(B_rechercherDossierDestination))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(PB_progression, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(B_tout_est_ok))
-                    .addComponent(SP_fichiers_destination))
+                        .addComponent(B_toutEstOk))
+                    .addComponent(SP_fichiersDestination))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -283,20 +283,20 @@ public final class FenetreNew extends JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(L_destination)
-                            .addComponent(TF_dossier_destination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(B_rechercher_dossier_destination))))
+                            .addComponent(TF_dossierDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(B_rechercherDossierDestination))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SP_fichiers_destination, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
-                    .addComponent(SP_fichiers_sources))
+                    .addComponent(SP_fichiersDestination, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                    .addComponent(SP_fichiersSources))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(B_copîe)
-                        .addComponent(B_vider_liste))
+                        .addComponent(B_copie)
+                        .addComponent(B_viderListe))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(PB_progression, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(B_tout_est_ok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(B_toutEstOk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -308,18 +308,18 @@ public final class FenetreNew extends JFrame {
      *
      * @param evt L'évènement.
      */
-    private void B_copîeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_copîeActionPerformed
-        Thread th = new Thread() {
+    private void B_copieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_copieActionPerformed
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
-                    String dossier_destination = TF_dossier_destination.getText();
+                    String dossierDestination = TF_dossierDestination.getText();
 
-                    if (dossier_destination.isBlank()) {
+                    if (dossierDestination.isBlank()) {
                         throw new CompareMD5Exception("Il faut spécifier un dossier de destination.");
                     }
 
-                    File destination = new File(dossier_destination);
+                    File destination = new File(dossierDestination);
 
                     if (!destination.exists()) {
                         throw new CompareMD5Exception("Le dossier de destination n'existe pas.");
@@ -329,58 +329,58 @@ public final class FenetreNew extends JFrame {
                         throw new CompareMD5Exception("La destination n'est pas un dossier.");
                     }
 
-                    boolean tout_est_ok = true;
+                    boolean toutEstOk = true;
 
-                    File fichier_source;
-                    String fichier_source_md5;
-                    File fichier_destination;
-                    String fichier_destination_md5;
+                    File fichierSource;
+                    String fichierSourceMd5;
+                    File fichierDestination;
+                    String fichierDestinationMd5;
 
-                    String[] colonne_destination;
+                    String[] colonneDestination;
 
-                    DefaultTableModel model_destination = (DefaultTableModel) T_liste_fichier_destination.getModel();
+                    DefaultTableModel modelDestination = (DefaultTableModel) T_listeFichierDestination.getModel();
 
-                    PB_progression.setMaximum(T_liste_fichier_source.getRowCount());
+                    PB_progression.setMaximum(T_listeFichierSource.getRowCount());
 
                     // Fait la copie des fichiers + vérifie via MD5 que la copie est conforme :
-                    for (int i = 0; i < T_liste_fichier_source.getRowCount(); i++) {
-                        fichier_source = new File((String) T_liste_fichier_source.getValueAt(i, 0));
-                        colonne_destination = new String[3];
+                    for (int i = 0; i < T_listeFichierSource.getRowCount(); i++) {
+                        fichierSource = new File((String) T_listeFichierSource.getValueAt(i, 0));
+                        colonneDestination = new String[3];
 
                         try {
-                            fichier_source_md5 = Utils.MD5(fichier_source);
+                            fichierSourceMd5 = Utils.MD5(fichierSource);
 
-                            fichier_destination = new File(dossier_destination + File.separator + fichier_source.getName());
+                            fichierDestination = new File(dossierDestination + File.separator + fichierSource.getName());
 
-                            colonne_destination[0] = fichier_destination.getAbsolutePath();
+                            colonneDestination[0] = fichierDestination.getAbsolutePath();
 
-                            Files.copy(fichier_source.toPath(), fichier_destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            fichier_destination_md5 = Utils.MD5(fichier_destination);
+                            Files.copy(fichierSource.toPath(), fichierDestination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            fichierDestinationMd5 = Utils.MD5(fichierDestination);
 
-                            colonne_destination[1] = fichier_destination_md5;
+                            colonneDestination[1] = fichierDestinationMd5;
 
-                            System.out.println(fichier_source_md5 + " == " + fichier_destination_md5);
+                            System.out.println(fichierSourceMd5 + " == " + fichierDestinationMd5);
 
-                            if (fichier_source_md5.equals(fichier_destination_md5)) {
-                                colonne_destination[2] = "OK";
+                            if (fichierSourceMd5.equals(fichierDestinationMd5)) {
+                                colonneDestination[2] = "OK";
                             } else {
-                                colonne_destination[2] = "BAD";
-                                tout_est_ok = false;
+                                colonneDestination[2] = "BAD";
+                                toutEstOk = false;
                             }
                         } catch (IOException | NoSuchAlgorithmException exception) {
-                            tout_est_ok = false;
-                            colonne_destination[2] = "BAD";
+                            toutEstOk = false;
+                            colonneDestination[2] = "BAD";
                             System.out.println("Erreur : " + exception.getMessage());
                         }
 
-                        model_destination.addRow(colonne_destination);
+                        modelDestination.addRow(colonneDestination);
                         PB_progression.setValue(i + 1);
                     }
 
-                    if (tout_est_ok) {
-                        B_tout_est_ok.setBackground(Color.GREEN);
+                    if (toutEstOk) {
+                        B_toutEstOk.setBackground(Color.GREEN);
                     } else {
-                        B_tout_est_ok.setBackground(Color.RED);
+                        B_toutEstOk.setBackground(Color.RED);
                     }
                 } catch (CompareMD5Exception exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -388,8 +388,8 @@ public final class FenetreNew extends JFrame {
             }
         };
 
-        th.start();
-    }//GEN-LAST:event_B_copîeActionPerformed
+        thread.start();
+    }//GEN-LAST:event_B_copieActionPerformed
 
     /**
      * Quand on clique sur le bouton "<em>Vider liste</em>".<br>
@@ -397,13 +397,13 @@ public final class FenetreNew extends JFrame {
      *
      * @param evt L'évènement.
      */
-    private void B_vider_listeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_vider_listeActionPerformed
-        DefaultTableModel model_source = (DefaultTableModel) this.T_liste_fichier_source.getModel();
-        DefaultTableModel model_destination = (DefaultTableModel) this.T_liste_fichier_destination.getModel();
+    private void B_viderListeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_viderListeActionPerformed
+        DefaultTableModel modelSource = (DefaultTableModel) this.T_listeFichierSource.getModel();
+        DefaultTableModel modelDestination = (DefaultTableModel) this.T_listeFichierDestination.getModel();
 
-        model_source.setRowCount(0);
-        model_destination.setRowCount(0);
-    }//GEN-LAST:event_B_vider_listeActionPerformed
+        modelSource.setRowCount(0);
+        modelDestination.setRowCount(0);
+    }//GEN-LAST:event_B_viderListeActionPerformed
 
     /**
      * Quand on clique sur le bouton "<em>...</em>".<br>
@@ -412,27 +412,27 @@ public final class FenetreNew extends JFrame {
      *
      * @param evt L'évènement.
      */
-    private void B_rechercher_dossier_destinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_rechercher_dossier_destinationActionPerformed
+    private void B_rechercherDossierDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_rechercherDossierDestinationActionPerformed
         JChooser.directory(
                 this,
-                (file) -> {
-                    this.TF_dossier_destination.setText(file.getAbsolutePath());
+                dossier -> {
+                    this.TF_dossierDestination.setText(dossier.getAbsolutePath());
                 }
         );
-    }//GEN-LAST:event_B_rechercher_dossier_destinationActionPerformed
+    }//GEN-LAST:event_B_rechercherDossierDestinationActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton B_copîe;
-    private javax.swing.JButton B_rechercher_dossier_destination;
-    private javax.swing.JButton B_tout_est_ok;
-    private javax.swing.JButton B_vider_liste;
+    private javax.swing.JButton B_copie;
+    private javax.swing.JButton B_rechercherDossierDestination;
+    private javax.swing.JButton B_toutEstOk;
+    private javax.swing.JButton B_viderListe;
     private javax.swing.JLabel L_destination;
     private javax.swing.JLabel L_source;
     private javax.swing.JProgressBar PB_progression;
-    private javax.swing.JScrollPane SP_fichiers_destination;
-    private javax.swing.JScrollPane SP_fichiers_sources;
-    private javax.swing.JTextField TF_dossier_destination;
-    private javax.swing.JTable T_liste_fichier_destination;
-    private javax.swing.JTable T_liste_fichier_source;
+    private javax.swing.JScrollPane SP_fichiersDestination;
+    private javax.swing.JScrollPane SP_fichiersSources;
+    private javax.swing.JTextField TF_dossierDestination;
+    private javax.swing.JTable T_listeFichierDestination;
+    private javax.swing.JTable T_listeFichierSource;
     // End of variables declaration//GEN-END:variables
 }

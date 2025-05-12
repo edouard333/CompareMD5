@@ -33,13 +33,13 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="199" pref="625" max="32767" attributes="0"/>
-              <Component id="B_tout_est_ok" min="-2" max="-2" attributes="0"/>
+              <Component id="B_toutEstOk" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <Component id="SP_fichiers_sources" pref="427" max="32767" attributes="0"/>
+              <Component id="SP_fichiersSources" pref="427" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="SP_fichiers_destination" min="-2" pref="459" max="-2" attributes="0"/>
+              <Component id="SP_fichiersDestination" min="-2" pref="459" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,11 +53,11 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="SP_fichiers_destination" pref="517" max="32767" attributes="0"/>
-                  <Component id="SP_fichiers_sources" max="32767" attributes="0"/>
+                  <Component id="SP_fichiersDestination" pref="517" max="32767" attributes="0"/>
+                  <Component id="SP_fichiersSources" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="B_tout_est_ok" min="-2" max="-2" attributes="0"/>
+              <Component id="B_toutEstOk" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -69,14 +69,14 @@
         <Property name="text" type="java.lang.String" value="Source"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="SP_fichiers_sources">
+    <Container class="javax.swing.JScrollPane" name="SP_fichiersSources">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="T_fichiers_sources">
+        <Component class="javax.swing.JTable" name="T_fichiersSources">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="4"/>
@@ -90,14 +90,14 @@
         <Property name="text" type="java.lang.String" value="Destination"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JScrollPane" name="SP_fichiers_destination">
+    <Container class="javax.swing.JScrollPane" name="SP_fichiersDestination">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="T_fichier_destination">
+        <Component class="javax.swing.JTable" name="T_fichierDestination">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="0" rowCount="4"/>
@@ -106,7 +106,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="B_tout_est_ok">
+    <Component class="javax.swing.JButton" name="B_toutEstOk">
       <Properties>
         <Property name="text" type="java.lang.String" value="Tout est ok"/>
       </Properties>

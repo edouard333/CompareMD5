@@ -55,9 +55,9 @@ public final class DB {
      * @param md5
      */
     public void addFile(@NotNull String name, @NotNull String md5) throws CompareMD5Exception {
-        String requete_sql = "INSERT INTO file (name, md5) VALUES(?, ?);";
+        String requeteSql = "INSERT INTO file (name, md5) VALUES(?, ?);";
 
-        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(requete_sql)) {
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(requeteSql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, md5);
             pstmt.executeUpdate();
@@ -95,17 +95,17 @@ public final class DB {
             Statement stmt = this.connect().createStatement();
 
             // Créer table:
-            String requete_sql = "CREATE TABLE IF NOT EXISTS file (\n"
+            String requeteSql = "CREATE TABLE IF NOT EXISTS file (\n"
                     + "	id INTEGER PRIMARY KEY,\n" // ID
                     + "	name TEXT NOT NULL,\n"
                     + " md5 TEXT NOT NULL);";
 
-            stmt.execute(requete_sql);
+            stmt.execute(requeteSql);
 
             // Vider la table.
-            requete_sql = "DELETE FROM file;";
+            requeteSql = "DELETE FROM file;";
 
-            stmt.execute(requete_sql);
+            stmt.execute(requeteSql);
         } catch (SQLException exception) {
             throw new CompareMD5Exception(exception.getMessage(), exception);
         }
@@ -135,9 +135,9 @@ public final class DB {
      */
     @Null
     public String getMD5File(@NotNull String name) throws CompareMD5Exception {
-        String requete_sql = "SELECT md5 FROM file WHERE name = ?";
+        String requeteSql = "SELECT md5 FROM file WHERE name = ?";
 
-        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(requete_sql)) {
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(requeteSql)) {
             pstmt.setString(1, name);
 
             try (ResultSet rs = pstmt.executeQuery()) {
