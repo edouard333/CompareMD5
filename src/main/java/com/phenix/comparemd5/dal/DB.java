@@ -33,7 +33,7 @@ public final class DB {
     private final File fichier;
 
     /**
-     *
+     * Initialise l'accès à la DB.
      */
     public DB() {
         this(new File("c:\\TMP\\file_md5.db"));
@@ -51,8 +51,8 @@ public final class DB {
     /**
      * Ajouter un fichier.
      *
-     * @param name
-     * @param md5
+     * @param name Le nom du fichier.
+     * @param md5 Le MD5 du fichier.
      */
     public void addFile(@NotNull String name, @NotNull String md5) throws CompareMD5Exception {
         String requeteSql = "INSERT INTO file (name, md5) VALUES(?, ?);";
@@ -67,9 +67,9 @@ public final class DB {
     }
 
     /**
-     * Donne l'objet de connexion.
+     * Retourne l'objet de connexion à la base de données.
      *
-     * @return
+     * @return La connexion à la DB.
      *
      * @throws CompareMD5Exception
      */
@@ -128,7 +128,7 @@ public final class DB {
     /**
      * Retourne le MD5 d'un fichier en {@link String}.
      *
-     * @param name
+     * @param name Le nom du fichier.
      * @return Le MD5 sinon {@code null}.
      *
      * @throws CompareMD5Exception
