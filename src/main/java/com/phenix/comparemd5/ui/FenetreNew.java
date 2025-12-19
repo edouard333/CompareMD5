@@ -144,13 +144,15 @@ public final class FenetreNew extends JFrame {
      */
     private void addListeFichier(@NotNull DefaultTableModel model, @NotNull File[] listeFichier, @Null String[] row) {
         for (int i = 0; i < listeFichier.length; i++) {
+            File fichier = listeFichier[i];
+
             // Si c'est un dossier, on ajoute tous ses fichiers.
-            if (listeFichier[i].isDirectory()) {
-                this.addListeFichier(model, listeFichier[i].listFiles());
+            if (fichier.isDirectory()) {
+                this.addListeFichier(model, fichier.listFiles());
             } // Sinon, on ajoute le fichier.
             else {
                 row = new String[1];
-                row[0] = listeFichier[i].getAbsolutePath();
+                row[0] = fichier.getAbsolutePath();
                 System.out.println((i + 1) + "/" + listeFichier.length);
                 model.addRow(row);
             }
@@ -331,31 +333,24 @@ public final class FenetreNew extends JFrame {
 
                     boolean toutEstOk = true;
 
-                    File fichierSource;
-                    String fichierSourceMd5;
-                    File fichierDestination;
-                    String fichierDestinationMd5;
-
-                    String[] colonneDestination;
-
                     DefaultTableModel modelDestination = (DefaultTableModel) T_listeFichierDestination.getModel();
 
                     PB_progression.setMaximum(T_listeFichierSource.getRowCount());
 
                     // Fait la copie des fichiers + vérifie via MD5 que la copie est conforme :
                     for (int i = 0; i < T_listeFichierSource.getRowCount(); i++) {
-                        fichierSource = new File((String) T_listeFichierSource.getValueAt(i, 0));
-                        colonneDestination = new String[3];
+                        File fichierSource = new File((String) T_listeFichierSource.getValueAt(i, 0));
+                        String[] colonneDestination = new String[3];
 
                         try {
-                            fichierSourceMd5 = Utils.MD5(fichierSource);
+                            String fichierSourceMd5 = Utils.MD5(fichierSource);
 
-                            fichierDestination = new File(dossierDestination + File.separator + fichierSource.getName());
+                            File fichierDestination = new File(dossierDestination + File.separator + fichierSource.getName());
 
                             colonneDestination[0] = fichierDestination.getAbsolutePath();
 
                             Files.copy(fichierSource.toPath(), fichierDestination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                            fichierDestinationMd5 = Utils.MD5(fichierDestination);
+                            String fichierDestinationMd5 = Utils.MD5(fichierDestination);
 
                             colonneDestination[1] = fichierDestinationMd5;
 

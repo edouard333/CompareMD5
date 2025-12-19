@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.phenix</groupId>
     <artifactId>comparemd5</artifactId>
-    <version>0.6.7</version>
+    <version>0.6.8</version>
     <packaging>jar</packaging>
     
     <name>CompareMD5</name>
@@ -27,7 +27,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>3.8.0</version>
                 <executions>
                     <execution>
                         <id>jar-with-dependencies</id>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.phenix</groupId>
             <artifactId>swing</artifactId>
-            <version>0.6.5</version>
+            <version>0.6.7</version>
         </dependency>
         <!-- Ajout des annotations @NotNull, etc. -->
         <dependency>
@@ -76,14 +76,13 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.49.1.0</version>
+            <version>3.51.0.0</version>
         </dependency>
     </dependencies>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>${project.groupId}.${project.artifactId}.Main</exec.mainClass>
     </properties>
 </project>

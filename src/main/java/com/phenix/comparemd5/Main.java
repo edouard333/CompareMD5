@@ -23,10 +23,8 @@ public final class Main {
      */
     public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc="Design de l'application selon l'OS.">
-        LookAndFeelInfo[] list = UIManager.getInstalledLookAndFeels();
-
         try {
-            for (LookAndFeelInfo item : list) {
+            for (LookAndFeelInfo item : UIManager.getInstalledLookAndFeels()) {
                 // Si on trouve un thème "Windows", on le prend !
                 if (item.getName().equals("Windows")) {
                     UIManager.setLookAndFeel(item.getClassName());

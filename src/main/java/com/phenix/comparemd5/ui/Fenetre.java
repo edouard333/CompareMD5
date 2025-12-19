@@ -70,10 +70,8 @@ public final class Fenetre extends JFrame {
      * @return
      */
     private String getMD5Source(String fichier) {
-        String fichierSource;
-
         for (int i = 0; i < this.T_fichiersSources.getRowCount(); i++) {
-            fichierSource = (String) this.T_fichiersSources.getValueAt(i, 0);
+            String fichierSource = (String) this.T_fichiersSources.getValueAt(i, 0);
 
             if (fichierSource.equals(fichier)) {
                 return (String) this.T_fichiersSources.getValueAt(i, 1);
@@ -120,17 +118,18 @@ public final class Fenetre extends JFrame {
     /**
      * Analyse d'un ensemble de fichier.
      *
-     * @param files LIste de fichier.
+     * @param files Liste de fichier.
      * @param row La ligne.
      * @param model Le modèle du tableau.
      */
     private void listFichier(@NotNull File[] files, @NotNull @NotEmpty Object[] row, @NotNull DefaultTableModel model) {
-        //System.out.println("add : " + listeRemarque.get(i).getId());
         for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
-                listFichier(files[i].listFiles(), row, model);
+            File file = files[i];
+
+            if (file.isDirectory()) {
+                listFichier(file.listFiles(), row, model);
             } else {
-                addFile(files[i], row, model);
+                addFile(file, row, model);
                 System.out.println((i + 1) + "/" + files.length);
             }
         }
