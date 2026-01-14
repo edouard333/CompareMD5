@@ -1,0 +1,46 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 https://maven.apache.org/xsd/assembly-1.1.3.xsd">
+    <id>${project.version}</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <!-- On copie en donnant la permission execution sur les scripts en plus de les renommer. -->
+    <files>
+        <file>
+            <source>${project.build.directory}/resources/${project.version}/run.bat</source>
+            <fileMode>755</fileMode>
+            <destName>run-${project.version}.bat</destName>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/resources/${project.version}/run.sh</source>
+            <fileMode>755</fileMode>
+            <destName>run-${project.version}.sh</destName>
+            <outputDirectory>/</outputDirectory>
+        </file>
+    </files>
+    
+    <fileSets>
+        <!-- On copie des fichiers du dossier resources (target). -->
+        <fileSet>
+            <directory>${project.build.directory}/resources/${project.version}</directory>
+            <excludes>
+                <exclude>run.bat</exclude>
+                <exclude>run.sh</exclude>
+            </excludes>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+
+        <!-- Copie JAR avec dépendances. -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <includes>
+                <include>${project.build.finalName}.jar</include>
+            </includes>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
