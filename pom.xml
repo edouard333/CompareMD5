@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.phenix</groupId>
     <artifactId>comparemd5</artifactId>
-    <version>0.6.9</version>
+    <version>0.6.10</version>
     <packaging>jar</packaging>
     
     <name>CompareMD5</name>
@@ -299,7 +299,7 @@
         <dependency>
             <groupId>com.phenix</groupId>
             <artifactId>swing</artifactId>
-            <version>0.6.8</version>
+            <version>0.6.9</version>
         </dependency>
         <!-- Ajout des annotations @NotNull, etc. -->
         <dependency>
